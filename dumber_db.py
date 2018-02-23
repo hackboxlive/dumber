@@ -2,7 +2,7 @@ import sqlite3
 import json
 from datetime import datetime
 
-timeframe = '2015-05'
+timeframe = '2015-01'
 sql_transaction = []
 
 connection = sqlite3.connect('{}.db'.format(timeframe))
@@ -30,13 +30,36 @@ def find_parent(pid):
 		#print("find_parent",e)
 		return False
 
+def find_existing_score(pid):
+	try:
+		sql = "SELECT score FROM parent_reply WHERE parent_id = '{}' LIMIT 1".format(pid)
+		c.execute(sql)
+		result = c.fetchone()
+		if result != None:
+			return result[0]
+		else:
+			return False		
+	except Exception as e:
+		#print("find_existing_score",e)
+		return False
+
+def acceptable(data):
+	if len(data.split(' '))	> 50 or len(data) < 1:
+		return False
+	elif len(data)>1000:
+		return False
+	elif data == '[deleted]' or data == '[removed]':
+		return False
+	return True
+
 if __name__ == "__main__":
 	create_table()
 	row_counter = 0
 	paired_rows = 0
-	data_path = ""
-	with open(data_path, buffer = 1000) as f:
+	data_path = "/media/shakti/Space Warp/Downloads/RC_2015-01/RC_2015-01"
+	with open(data_path, buffering = 1000) as f:
 		for row in f:
+			#print(row)
 			row_counter += 1
 			row = json.loads(row)
 			parent_id = row['parent_id']
@@ -46,3 +69,10 @@ if __name__ == "__main__":
 			subreddit = row['subreddit']
 
 			parent_data = find_parent(parent_id)
+			
+			if score >= 2:
+				existing_comment_score = find_existing_score(parent_id)
+				if existing_comment_score:
+					if score > existing_comment_score:
+
+
