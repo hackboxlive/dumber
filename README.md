@@ -13,4 +13,5 @@ This project is mainly to see how libraries work, and this is my first time deal
 I think it was a fun project to make.
 
 **NOTE**
+
 The small `db` files present in the repo are just a small part of the 30 GB database that the chatbot is actually trained on. :-p
