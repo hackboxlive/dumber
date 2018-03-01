@@ -11,3 +11,6 @@ The model that I am using of Tensorflow is sequence-to-sequence model which is a
 This project is mainly to see how libraries work, and this is my first time dealing with databases. I tried using sqlite3 in python3 to manage the databases. 
 
 I think it was a fun project to make.
+
+**NOTE**
+The small `db` files present in the repo are just a small part of the 30 GB database that the chatbot is actually trained on. :-p
